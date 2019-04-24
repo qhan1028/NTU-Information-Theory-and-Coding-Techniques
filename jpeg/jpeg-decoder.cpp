@@ -14,7 +14,7 @@
 #include <string.h>
 #include <vector>
 
-#include "bitmap_image.hpp"
+#include "bitmap-image.hpp"
 
 #define PI 3.14159265359
 
@@ -431,9 +431,11 @@ htable_t* init_htable() {
 
 void print_DHT(htable_t* htable) {
     cout << "[Huffman Table]" << endl;
+    
     for (unsigned int i = 0; i < 4; i++) {
         cout << "  hid = " << i << endl;
         htable_t::iterator iter;
+
         for (htable_t::iterator iter = htable[i].begin(); iter != htable[i].end(); iter++) {
             uint8_t length = iter->first.first;
             uint16_t symbol = iter->first.second;
@@ -922,18 +924,18 @@ void process_other(ifstream& jpegfile, unsigned int opt) {
  * 
  */
 int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        cout << "[Error] usage: -f [filename].jpg" << endl;
+    if (argc < 2) {
+        cout << "[Error] usage: ./jpeg-decoder [filename].jpg" << endl;
         return -1;
     }
 
     /* parse filename */
     string filename;
     for (int i = 0; i < argc; i++) {
-        if (strcmp(argv[i], "-f") == 0)
-            filename = argv[i + 1];
         if (strcmp(argv[i], "--debug") == 0)
             debug = true;
+        else
+            filename = argv[i];
     }
 
     /* open jpeg */
